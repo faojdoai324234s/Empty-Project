@@ -20,7 +20,9 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev
-          ls /usr/local
+          echo "List local..." && ls /usr/local
+          echo "List bin..." && ls /usr/local/bin
+          echo "List include..." && ls /usr/local/include
           
       - name: Build project
         run: |
