@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev
-          vcpkg help
+          vcpkg install botan
           
       - name: Build project
         run: |
