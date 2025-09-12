@@ -17,6 +17,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Download Qt
+      shell: cmd
+      run: |
+        git clone https://github.com/faojdoai324234s/Qt-Win-V3 C:\
+        dir C:\
+        dir C:\Qt-Win-V3
+        aa
+        
     - name: Install Visual Studio platform toolset
       shell: cmd
       run: |
