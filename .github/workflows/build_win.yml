@@ -17,6 +17,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Install Visual Studio platform toolset
+      shell: cmd
+      run: |
+        "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --norestart --includeRecommended --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" --channelId VisualStudio.15.Release --add Microsoft.VisualStudio.Component.VC.v141.x86.x64
+    
     - name: Download Qt
       shell: cmd
       run: |
@@ -24,13 +29,6 @@ jobs:
         git clone https://github.com/faojdoai324234s/Qt-Win-V3 C:\Qt
         xcopy /y /v /s /e C:\Qt\Qt-5.15.17 C:\Qt
         rmdir /s /q C:\Qt\Qt-5.15.17
-        dir C:\Qt
-        aa
-        
-    - name: Install Visual Studio platform toolset
-      shell: cmd
-      run: |
-        "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --norestart --includeRecommended --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" --channelId VisualStudio.15.Release --add Microsoft.VisualStudio.Component.VC.v141.x86.x64
         
     - name: Install Protobuf
       shell: cmd
