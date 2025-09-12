@@ -1,0 +1,30 @@
+name: Build Linux
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Qt
+        run: |
+          git clone https://github.com/faojdoai324234s/Qt-Linux
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev
+          
+      - name: Build project
+        run: |
+          cmake -S . -B build -D Qt5_DIR="Qt-Linux/Qt5.15.16" -D CMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release
+          
+      - name: Run project
+        run: ./build/Empty-Project
