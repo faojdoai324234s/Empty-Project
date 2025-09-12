@@ -22,6 +22,8 @@ jobs:
       run: |
         mkdir C:\Qt
         git clone https://github.com/faojdoai324234s/Qt-Win-V3 C:\Qt
+        xcopy /y /v /s /e C:\Qt\Qt-5.15.17 C:\Qt
+        rem C:\Qt\Qt-5.15.17
         dir C:\Qt
         aa
         
