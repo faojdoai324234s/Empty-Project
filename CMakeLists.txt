@@ -48,6 +48,8 @@ set_property( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT 
 if( UNIX AND NOT APPLE )
   set( LINK_LIBS
   # libavcodec.so libavdevice.so libavfilter.so libavformat.so libavutil.so libpostproc.so libswresample.so libswscale.so
+  libprotobuf.so
+  libbotan.so
   )
 elseif( APPLE )
   set( LINK_LIBS
