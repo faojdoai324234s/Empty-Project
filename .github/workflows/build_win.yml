@@ -1,0 +1,74 @@
+name: Windows Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  triplet: x64-windows-custom
+  
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Visual Studio platform toolset
+      shell: cmd
+      run: |
+        "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --norestart --includeRecommended --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" --channelId VisualStudio.15.Release --add Microsoft.VisualStudio.Component.VC.v141.x86.x64
+        
+    - name: Install Protobuf
+      shell: cmd
+      run: |
+        git clone https://github.com/microsoft/vcpkg
+        cd vcpkg
+        git checkout 6245ce4 -- ports/protobuf
+        copy /y /v ${{github.workspace}}\${{ env.triplet }}.cmake triplets
+        vcpkg install protobuf protobuf:${{ env.triplet }}
+
+    - name: Generate source files
+      shell: cmd
+      run: |
+        mkdir ${{github.workspace}}\include
+        mkdir ${{github.workspace}}\lib
+        mkdir ${{github.workspace}}\src\player
+        mkdir ${{github.workspace}}\src\player\internal
+        ${{github.workspace}}\vcpkg\installed\${{ env.triplet }}\tools\protobuf\protoc.exe --cpp_out=${{github.workspace}}\src\player\internal widevine_protocol.proto
+
+    - name: Copy Protobuf headers and libraries
+      shell: cmd
+      run: |
+        xcopy /y /v /s /e ${{github.workspace}}\vcpkg\installed\${{ env.triplet }}\include ${{github.workspace}}\include
+        copy /y /v ${{github.workspace}}\vcpkg\installed\${{ env.triplet }}\lib\libprotobuf.lib ${{github.workspace}}\lib
+        rmdir /s /q ${{github.workspace}}\vcpkg
+
+    - name: Install Botan
+      shell: cmd
+      run: |
+        git clone https://github.com/microsoft/vcpkg
+        cd vcpkg
+        git checkout 3dd12b903561148b931de27f10f7f603db8e0171 -- ports/botan
+        copy /y /v ${{github.workspace}}\${{ env.triplet }}.cmake triplets
+        vcpkg install botan botan:${{ env.triplet }}
+
+    - name: Copy Botan headers and libraries
+      shell: cmd
+      run: |
+        xcopy /y /v /s /e ${{github.workspace}}\vcpkg\installed\${{ env.triplet }}\include ${{github.workspace}}\include
+        copy /y /v ${{github.workspace}}\vcpkg\installed\${{ env.triplet }}\lib\botan.lib ${{github.workspace}}\lib
+        rmdir /s /q ${{github.workspace}}\vcpkg
+        
+    - name: Build project
+      shell: cmd
+      run: |
+        cmake -B build -D Qt5_DIR="C:/Qt/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -G "Visual Studio 17" -D CMAKE_GENERATOR_TOOLSET=v141
+        cmake --build build --config Release
+        
+    - name: Run project
+      shell: cmd
+      run: ${{github.workspace}}/build/Release/Empty-Project.exe
