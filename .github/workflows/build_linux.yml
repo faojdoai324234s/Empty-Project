@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev
+          sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev libbotan-2-19
           
       - name: Build project
         run: |
