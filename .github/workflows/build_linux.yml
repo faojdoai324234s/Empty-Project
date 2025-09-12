@@ -20,11 +20,15 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev
-          vcpkg install botan
+          wget -qO- https://botan.randombit.net/releases/Botan-2.19.4.tar.xz | tar xvJ
+          cd Botan-2.19.4
+          ./configure.py --prefix=/usr
+          make
+          sudo make install
           
       - name: Build project
         run: |
-          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-Linux/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release
+          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-Linux/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr
           cmake --build build --config Release
           
       - name: Run project
