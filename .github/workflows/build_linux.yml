@@ -16,6 +16,8 @@ jobs:
       - name: Download Qt
         run: |
           git clone https://github.com/faojdoai324234s/Qt-Linux
+          ls ${{github.workspace}}/Qt-Linux/Qt5.15.16/lib/cmake/Qt5
+          lsss
 
       - name: Install dependencies
         run: |
