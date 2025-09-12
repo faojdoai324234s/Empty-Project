@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.19 )
 
-set( library_name Template-Project )
+set( library_name Empty-Project )
 
 project( ${library_name} CXX )
 
