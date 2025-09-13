@@ -25,9 +25,12 @@ jobs:
           ./configure.py --prefix=/usr
           make
           sudo make install
-          echo "List bin..." && ls /usr/bin
-          echo "List include..." && ls /usr/include
-          echo "List lib..." && ls /usr/lib
+          mkdir include
+          cp -R /usr/include/botan-2 include
+          echo "List botan..." && ls /usr/include/botan-2
+#          echo "List bin..." && ls /usr/bin
+#          echo "List include..." && ls /usr/include
+#          echo "List lib..." && ls /usr/lib
           
       - name: Build project
         run: |
