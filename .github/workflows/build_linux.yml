@@ -26,9 +26,9 @@ jobs:
           make
           sudo make install
           cp -R /usr/include/botan-2 include
-          echo "List include..." && ls include
-          echo "List botan..." && ls include/botan
-          protoc --cpp_out=${{github.workspace}}/src/player/internal widevine_protocol.proto
+          protoc --cpp_out=${{github.workspace}}/src/player/internal ${{github.workspace}}/widevine_protocol.proto
+#          echo "List include..." && ls include
+#          echo "List botan..." && ls include/botan
 #          echo "List bin..." && ls /usr/bin
 #          echo "List include..." && ls /usr/include
 #          echo "List lib..." && ls /usr/lib
