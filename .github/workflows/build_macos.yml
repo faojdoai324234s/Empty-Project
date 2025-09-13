@@ -23,7 +23,7 @@ jobs:
           wget -qO- https://botan.randombit.net/releases/Botan-2.19.4.tar.xz | tar xvJ
           cd Botan-2.19.4
           sudo ./configure.py --prefix=/usr
-          make
+          sudo make
           sudo make install
           cp -R /usr/include/botan-2 include
           mkdir -p ${{github.workspace}}/src/player/internal
