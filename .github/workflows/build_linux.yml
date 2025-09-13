@@ -1,4 +1,4 @@
-name: Build Linux
+name: Linux Build
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
           
       - name: Build project
         run: |
-          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-Linux/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr
+          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-Linux/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr -D BOTAN_INCLUDE_DIR="/usr/include/botan-2"
           cmake --build build --config Release
           
       - name: Run project
