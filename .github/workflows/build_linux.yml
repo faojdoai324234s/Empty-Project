@@ -19,12 +19,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler libbotan-2-dev
+          sudo apt-get update && sudo apt-get install libprotobuf-dev protobuf-compiler
           wget -qO- https://botan.randombit.net/releases/Botan-2.19.4.tar.xz | tar xvJ
           cd Botan-2.19.4
           ./configure.py --prefix=/usr
           make
           sudo make install
+          echo "List bin..." && ls /usr/bin
+          echo "List include..." && ls /usr/include
+          echo "List lib..." && ls /usr/lib
           
       - name: Build project
         run: |
