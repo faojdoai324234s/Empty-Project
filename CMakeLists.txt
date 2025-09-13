@@ -26,9 +26,6 @@ endif()
 
 find_package( Qt5 REQUIRED COMPONENTS Core Gui Network Svg Widgets )
 find_package( OpenSSL REQUIRED )
-if( UNIX AND NOT APPLE )
-  find_package( botan CONFIG REQUIRED )
-endif()
 
 file( GLOB SRC_FILES
   ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -52,7 +49,7 @@ if( UNIX AND NOT APPLE )
   set( LINK_LIBS
   # libavcodec.so libavdevice.so libavfilter.so libavformat.so libavutil.so libpostproc.so libswresample.so libswscale.so
   libprotobuf.so
-  Botan::Botan-static
+  libbotan-2.so
   )
 elseif( APPLE )
   set( LINK_LIBS
