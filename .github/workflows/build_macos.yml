@@ -13,6 +13,12 @@ jobs:
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
+      - name: Install botan
+        run: |
+          wget -qO- https://botan.randombit.net/releases/Botan-2.19.4.tar.xz | tar xvJ
+          cd Botan-2.19.4
+          sudo ./configure.py --prefix=/usr
+          
       - name: Download Qt
         run: |
           git clone https://github.com/faojdoai324234s/Qt-macOS
