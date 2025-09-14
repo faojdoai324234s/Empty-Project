@@ -39,7 +39,11 @@ file( GLOB SRC_FILES
   ${PROJECT_SOURCE_DIR}/src/player/internal/*.hpp
 )
 
-link_directories( ${PROJECT_SOURCE_DIR}/lib )
+if( APPLE )
+  link_directories( ${PROJECT_SOURCE_DIR}/lib ${BOTAN_LIB_DIR} )
+else()
+  link_directories( ${PROJECT_SOURCE_DIR}/lib )
+endif()
 
 add_executable( ${library_name} ${SRC_FILES} )
 
