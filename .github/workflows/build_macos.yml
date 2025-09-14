@@ -26,6 +26,7 @@ jobs:
           ./configure.py --prefix=${{github.workspace}}/botan
           make
           sudo make install
+          echo "Check lib..." && ls ${{github.workspace}}/botan/lib
           cp -R ${{github.workspace}}/botan/include/botan-2 include
           mkdir -p ${{github.workspace}}/src/player/internal
           protoc --cpp_out=${{github.workspace}}/src/player/internal --proto_path=${{github.workspace}} widevine_protocol.proto
