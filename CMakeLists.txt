@@ -56,6 +56,8 @@ elseif( APPLE )
   set( ADDITIONAL_INCLUDE_DIRS ${BOTAN_INCLUDE_DIR} )
   set( LINK_LIBS
   # libavcodec.dylib libavdevice.dylib libavfilter.dylib libavformat.dylib libavutil.dylib libpostproc.dylib libswresample.dylib libswscale.dylib
+  libprotobuf.dylib
+  libbotan-2.dylib
   )
 elseif( WIN32 )
   set( ADDITIONAL_INCLUDE_DIRS )
