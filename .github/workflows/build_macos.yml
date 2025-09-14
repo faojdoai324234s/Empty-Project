@@ -1,0 +1,43 @@
+name: macOS Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4 
+      - name: Download Qt
+        run: |
+          git clone https://github.com/faojdoai324234s/Qt-macOS
+          
+      - name: Install dependencies
+        run: |
+          brew install protobuf
+          mkdir lib
+          mkdir botan
+          wget -qO- https://botan.randombit.net/releases/Botan-2.19.4.tar.xz | tar xvJ
+          cd Botan-2.19.4
+          ./configure.py --prefix=${{github.workspace}}/botan
+          make
+          sudo make install
+          echo "Check lib..." && ls ${{github.workspace}}/botan/lib
+          cp -R ${{github.workspace}}/botan/include/botan-2 include
+          cp ${{github.workspace}}/botan/lib/*.dylib ${{github.workspace}}/lib
+          cp ${{github.workspace}}/botan/lib/*.a ${{github.workspace}}/lib
+          mkdir -p ${{github.workspace}}/src/player/internal
+          protoc --cpp_out=${{github.workspace}}/src/player/internal --proto_path=${{github.workspace}} widevine_protocol.proto
+          
+      - name: Build project
+        run: |
+          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-macOS/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -D BOTAN_LIB_DIR="${{github.workspace}}/botan/lib" -D BOTAN_INCLUDE_DIR="${{github.workspace}}/botan/include/botan-2"
+          cmake --build build --config Release
+          
+      - name: Run project
+        run: ./build/Empty-Project
