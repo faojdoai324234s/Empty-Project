@@ -53,7 +53,7 @@ if( UNIX AND NOT APPLE )
   libbotan-2.so
   )
 elseif( APPLE )
-  set( ADDITIONAL_INCLUDE_DIRS )
+  set( ADDITIONAL_INCLUDE_DIRS ${BOTAN_INCLUDE_DIR} )
   set( LINK_LIBS
   # libavcodec.dylib libavdevice.dylib libavfilter.dylib libavformat.dylib libavutil.dylib libpostproc.dylib libswresample.dylib libswscale.dylib
   )
