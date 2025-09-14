@@ -20,6 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install protobuf
+          mkdir lib
           mkdir botan
           wget -qO- https://botan.randombit.net/releases/Botan-2.19.4.tar.xz | tar xvJ
           cd Botan-2.19.4
@@ -28,6 +29,8 @@ jobs:
           sudo make install
           echo "Check lib..." && ls ${{github.workspace}}/botan/lib
           cp -R ${{github.workspace}}/botan/include/botan-2 include
+          cp ${{github.workspace}}/botan/lib/*.dylib ${{github.workspace}}/lib
+          cp ${{github.workspace}}/botan/lib/*.a ${{github.workspace}}/lib
           mkdir -p ${{github.workspace}}/src/player/internal
           protoc --cpp_out=${{github.workspace}}/src/player/internal --proto_path=${{github.workspace}} widevine_protocol.proto
           
