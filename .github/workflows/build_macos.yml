@@ -33,7 +33,7 @@ jobs:
           
       - name: Build project
         run: |
-          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-macOS/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX="${{github.workspace}}/botan" -D BOTAN_INCLUDE_DIR="${{github.workspace}}/botan/include/botan-2"
+          cmake -S . -B build -D Qt5_DIR="${{github.workspace}}/Qt-macOS/Qt-5.15.16/lib/cmake/Qt5" -D CMAKE_BUILD_TYPE=Release -D BOTAN_LIB_DIR="${{github.workspace}}/botan/lib" -D BOTAN_INCLUDE_DIR="${{github.workspace}}/botan/include/botan-2"
           cmake --build build --config Release
           
       - name: Run project
